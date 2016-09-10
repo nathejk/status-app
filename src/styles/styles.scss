@@ -6,11 +6,11 @@ body {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.4em;
   color: #4d4d4d;
-  // margin: 0 auto;
-  // -webkit-font-smoothing: antialiased;
-  // -moz-font-smoothing: antialiased;
-  // font-smoothing: antialiased;
-  // font-weight: 300;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  font-weight: 300;
 
   .fontLoaded {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -23,11 +23,21 @@ body {
     min-height: 100%;
     max-width: calc(768px + 16px * 2);
     flex-direction: column;
+
+    div:first-of-type div:first-of-type div:first-of-type {
+      margin-top: 0 !important;
+      margin: auto !important;
+      margin-right: 8px !important;
+      }
   }
 :global(#app) {
   background-color: #FAFAFA;
   min-height: 100%;
   min-width: 100%;
+}
+
+button {
+  -webkit-appearance: inherit !important;
 }
 
 .logoWrapper {

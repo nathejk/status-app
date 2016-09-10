@@ -23,9 +23,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-// Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
-import 'sanitize.css/sanitize.css'
-
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={getMuiTheme()}>
