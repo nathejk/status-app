@@ -55,7 +55,7 @@ class App extends React.Component {
                 animation={PopoverAnimationVertical}>
                 <Menu>
                   <MenuItem primaryText="Home" onClick={() => this.handleMenuItemSelected('/')}/>
-                  <MenuItem primaryText="Scans" onClick={() => this.handleMenuItemSelected('/about')}/>
+                  <MenuItem primaryText="Status" onClick={() => this.handleMenuItemSelected('/status')}/>
                   <MenuItem primaryText="Sign out" onClick={() => this.handleMenuItemSelected('/')}/>
                 </Menu>
               </Popover>
