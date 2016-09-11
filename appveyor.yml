@@ -27,9 +27,9 @@ build: off
 notifications:
 - provider: Email
   to:
-  - housecor@gmail.com
-  subject: 'Build failed: react-slingshot'
-  message: The continuous integration build failed. See https://ci.appveyor.com/project/CoryHouse/react-slingshot/ for details.
+  # - someone@gmail.com
+  subject: 'Build failed: status-app'
+  message: The continuous integration build failed. See https://ci.appveyor.com/project/nathejk/status-app/ for details.
   on_build_success: false
   on_build_failure: true
-  on_build_status_changed: false
+  on_build_status_changed: true
