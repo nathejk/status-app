@@ -64,7 +64,9 @@ class App extends React.Component {
           style={{backgroundColor:'black'}}
         />
         <br/>
-        {this.props.children}
+        <div className='page-wrapper'>
+          {this.props.children}
+        </div>
       </div>
     )
   }
