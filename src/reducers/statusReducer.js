@@ -1,4 +1,5 @@
-import initialState from './initialState';
+import { SELECT_REGION } from '../constants/actionTypes'
+import initialState from './initialState'
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
 // State is considered immutable. Instead,
@@ -9,6 +10,9 @@ export default function statusReducer(state = initialState.data, action) {
   let newState;
 
   switch (action.type) {
+    case (SELECT_REGION): {
+      return action
+    }
 
     default:
       return state;

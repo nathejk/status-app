@@ -23,6 +23,21 @@ export default {
         }]
       },
       {
+        id: 'asdadsdadahfghs',
+        name: 'Doe\'s 2nd',
+        members: [{
+          id: 'asdasdgasfhfh',
+          name: 'John D',
+          phone: '12345678',
+          pictureUrl: 'http://bla.dk'
+        },
+        {
+          id: 'asdasdhdagajhfjas',
+          name: 'Jane D',
+          phone: '12345678'
+        }]
+      },
+      {
         id: 'asdadsdahfghs',
         name: 'Doe\'s 2nd',
         members: [{
