@@ -8,6 +8,22 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers';
 
 export default function configureStore(initialState) {
+    // const start = {
+    //   opacity: 0.5,
+    //   transition: 'opacity .5s ease-in-out'
+    // }
+
+    // const end = {
+    //   opacity: 1,
+    //   transition: 'opacity .5s ease-in-out'
+    // }
+
+    // const endFail = {
+    //   opacity: 1,
+    //   border: 'solid red 1px',
+    //   transition: 'opacity .5s ease-in-out'
+    // }
+
   const middewares = [
     // Add other middleware on this line...
 
@@ -16,7 +32,7 @@ export default function configureStore(initialState) {
 
     // thunk middleware can also accept an extra argument to be passed to each thunk action
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
-    thunkMiddleware,
+    thunkMiddleware
   ];
 
   const store = createStore(rootReducer, initialState, compose(

@@ -7,14 +7,15 @@ const objectAssign = require('object-assign');
 // create a copy of the state passed and set new values on the copy.
 // Note that I'm using Object.assign to create a copy of current state
 // and update values on the copy.
-export default function statusReducer(state = initialState.data, action) {
+export default function loginReducer(state = initialState.user, action) {
   switch (action.type) {
-    case (types.SELECT_REGION): {
-      return action
+    case (types.REQUEST_POSTS): {
+      console.log('REQUEST_POSTS')
+      return state
     }
 
     case (types.RECEIVE_POSTS): {
-      return objectAssign({}, state, action.data)
+      return objectAssign({}, state, {user: action.phone})
     }
 
     default:
