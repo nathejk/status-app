@@ -16,7 +16,7 @@ class Login extends Component {
   render () {
     return (
     <div>
-      <TextField value={this.state.phone} onChange={this.handleChange} floatingLabelText="Username" name="phone"/>
+      <TextField errorText={this.props.error} value={this.state.phone} onChange={this.handleChange} floatingLabelText="Username" name="phone"/>
       <RaisedButton label="Login" onClick={() => this.props.onClick(this.state.phone)}/>
     </div>
     )

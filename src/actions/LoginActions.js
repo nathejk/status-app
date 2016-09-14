@@ -6,11 +6,13 @@ import fetch from 'isomorphic-fetch'
 export function login(phone) {
 return dispatch => {
     dispatch(requestPosts(phone))
-    return fetch(`http://localhost:3000/Home/About`, {
+    return fetch(`http://localhost:3000/status?phone=${phone}`, {
+      // return fetch(`http://tilmelding.nathejk.dk/status?phone=${phone}`, {
+      method: 'GET',
       headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
     })
       .then(checkStatus)
       .then(parseJSON)
@@ -18,16 +20,18 @@ return dispatch => {
       .catch(function(error) {
         console.error(error);
         console.error(error.stack);
+        dispatch({
+          type: types.LOG_IN_FAILED,
+          error: error
+        })
       });
   }
 }
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    // console.log(response)
     return response
   } else {
-    // console.log(response)
     var error = new Error(response.statusText)
       error.response = response
     throw error
@@ -47,8 +51,6 @@ function requestPosts(phone) {
 }
 
 function receivePosts(phone, json) {
-  // console.log(phone)
-  // console.log(json)
   return {
     type: types.RECEIVE_POSTS,
     phone,
