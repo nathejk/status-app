@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from '../actions/LoginActions';
 import {AUTHENTICATED, DEFAULT, ERROR, LOADING} from '../constants/loginStates'
+import CircularProgress from 'material-ui/CircularProgress';
 
 
 export const HomePage = (props) => {
@@ -19,6 +20,9 @@ console.log(props.loginState)
 
   return (
     <div>
+        <div style={props.spinnerStyles}>
+          <CircularProgress />
+        </div>
         <Login error={props.errorMessage} onClick={onLogin}/>
     </div>
   );
@@ -29,8 +33,11 @@ function mapStateToProps(state, ownprops) {
   return {
     data: state.loginReducer,
     loginState: state.loginReducer.loginState,
-    errorMessage: state.loginReducer.loginState === ERROR ? errorMessage : null
-  };
+    errorMessage: state.loginReducer.loginState === ERROR ? errorMessage : null,
+    spinnerStyles: {
+      display: state.loginReducer.loginState === LOADING ? 'block' : 'hidden'
+    }
+  }
 }
 
 function mapDispatchToProps(dispatch) {
