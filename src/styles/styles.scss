@@ -22,19 +22,20 @@ body {
   margin-right: 15px;
 }
 
-  .wrapper {
-    margin: 0 auto;
-    display: flex;
-    min-height: 100%;
-    max-width: calc(768px + 16px * 2);
-    flex-direction: column;
+.wrapper {
+  margin: 0 auto;
+  display: flex;
+  min-height: 100%;
+  max-width: calc(768px + 16px * 2);
+  flex-direction: column;
 
-    div:first-of-type div:first-of-type div:first-of-type {
-      margin-top: 0 !important;
-      margin: auto !important;
-      margin-right: 8px !important;
-    }
+  .app-bar div {
+    margin-top: 0 !important;
+    margin: auto !important;
+    margin-right: 8px !important;
   }
+}
+
 :global(#app) {
   background-color: #FAFAFA;
   min-height: 100%;

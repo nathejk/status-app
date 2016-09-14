@@ -42,6 +42,7 @@ class App extends React.Component {
     return (
       <div>
         <AppBar
+          className="app-bar"
           title="Nathejk"
           iconElementLeft={
             <div>
