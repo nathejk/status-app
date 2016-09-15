@@ -7,15 +7,9 @@ import * as actions from '../actions/LoginActions';
 import {AUTHENTICATED, DEFAULT, ERROR, LOADING} from '../constants/loginStates'
 import CircularProgress from 'material-ui/CircularProgress';
 
-
 export const HomePage = (props) => {
   let onLogin = phone => {
     props.actions.login(phone)
-  }
-
-console.log(props.loginState)
-  if (props.loginState === AUTHENTICATED) {
-    browserHistory.push('/status')
   }
 
   return (

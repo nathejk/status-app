@@ -17,6 +17,7 @@ return dispatch => {
       .then(checkStatus)
       .then(parseJSON)
       .then(json => dispatch(receivePosts(phone, json)))
+      .then(() => dispatch(push('/status')))
       .catch(function(error) {
         console.error(error);
         console.error(error.stack);
