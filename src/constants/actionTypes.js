@@ -1,4 +1,5 @@
-export const LOG_IN = 'LOG_IN';
+export const LOG_IN = 'LOG_IN'
+export const LOG_OUT = 'LOG_OUT'
 export const SELECT_REGION = 'SELECT_REGION'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'

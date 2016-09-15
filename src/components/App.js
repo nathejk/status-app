@@ -8,7 +8,9 @@ import {Popover, PopoverAnimationVertical} from 'material-ui/Popover'
 import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu'
 import {grey50} from 'material-ui/styles/colors'
-
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actions from '../actions/LoginActions';
 class App extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -38,7 +40,27 @@ class App extends React.Component {
     })
   }
 
+  handleLogOut = () => {
+    this.props.actions.logOut()
+    this.handleMenuItemSelected('/')
+  }
+
   render() {
+    let menu
+    if (this.props.loggedIn) {
+      menu = (
+        <Menu>
+          <MenuItem primaryText="Home" onClick={() => this.handleMenuItemSelected('/')}/>
+          <MenuItem primaryText="Status" onClick={() => this.handleMenuItemSelected('/status')}/>
+          <MenuItem primaryText="Sign out" onClick={this.handleLogOut}/>
+        </Menu>)
+    } else {
+      menu = (
+            <Menu>
+              <MenuItem primaryText="Home" onClick={() => this.handleMenuItemSelected('/')}/>
+            </Menu>)
+    }
+
     return (
       <div>
         <AppBar
@@ -54,11 +76,7 @@ class App extends React.Component {
                 targetOrigin={{horizontal: 'left', vertical: 'top'}}
                 onRequestClose={this.handleRequestClose}
                 animation={PopoverAnimationVertical}>
-                <Menu>
-                  <MenuItem primaryText="Home" onClick={() => this.handleMenuItemSelected('/')}/>
-                  <MenuItem primaryText="Status" onClick={() => this.handleMenuItemSelected('/status')}/>
-                  <MenuItem primaryText="Sign out" onClick={() => this.handleMenuItemSelected('/')}/>
-                </Menu>
+                {menu}
               </Popover>
             </div>
           }
@@ -77,6 +95,21 @@ App.propTypes = {
   children: PropTypes.element
 }
 
-export default App
+function mapStateToProps(state, ownprops) {
+  return {
+    loggedIn: state.loginReducer.loginState === 'AUTHENTICATED'
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
 
 

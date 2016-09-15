@@ -19,6 +19,10 @@ export default function loginReducer(state = initialState.user, action) {
       return objectAssign({}, state, {loginState: ERROR})
     }
 
+    case (types.LOG_OUT): {
+      return objectAssign({}, state, {loginState: DEFAULT})
+    }
+
     case (types.RECEIVE_POSTS): {
       return objectAssign({}, state, {user: action.phone}, {loginState: AUTHENTICATED})
     }

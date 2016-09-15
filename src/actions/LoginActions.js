@@ -50,6 +50,13 @@ function requestPosts(phone) {
   }
 }
 
+export function logOut() {
+  return {
+    type: types.LOG_OUT,
+    logOutAt: Date.now()
+  }
+}
+
 function receivePosts(phone, json) {
   return {
     type: types.RECEIVE_POSTS,
