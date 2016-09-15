@@ -1,13 +1,26 @@
 import * as actions from '../actions/StatusActions'
 import React from 'react'
 import TeamList from './TeamList'
+import TeamListItem from './TeamListItem'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 export const TeamPage = (props) => {
+  let memberItems = props.region.members.map(member => {
+    return (
+      <TeamListItem
+        key={member.id}
+        name={member.name}
+        phone={member.phone}
+        onClick={() => console.log(`name: ${member.name}`)} />
+    )
+  })
+
+
   return (
     <div>
       <h2 className="alt-header">{props.region.name}</h2>
+      {memberItems}
       <TeamList
         teams={props.region.teams}/>
     </div>
