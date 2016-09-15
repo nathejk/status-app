@@ -1,6 +1,6 @@
-import { push } from 'react-router-redux';
-import * as types from '../constants/actionTypes';
-require('es6-promise').polyfill();
+import { push } from 'react-router-redux'
+import * as types from '../constants/actionTypes'
+require('es6-promise').polyfill()
 import fetch from 'isomorphic-fetch'
 
 export function login(phone) {
@@ -19,13 +19,13 @@ return dispatch => {
       .then(json => dispatch(receivePosts(phone, json)))
       .then(() => dispatch(push('/status')))
       .catch(function(error) {
-        console.error(error);
-        console.error(error.stack);
+        console.error(error)
+        console.error(error.stack)
         dispatch({
           type: types.LOG_IN_FAILED,
           error: error
         })
-      });
+      })
   }
 }
 

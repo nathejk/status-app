@@ -1,5 +1,5 @@
-import { push } from 'react-router-redux';
-import * as types from '../constants/actionTypes';
+import { push } from 'react-router-redux'
+import * as types from '../constants/actionTypes'
 
 export function regionSelected(region) {
   return (dispatch) => {
@@ -7,5 +7,5 @@ export function regionSelected(region) {
       type: types.SELECT_REGION,
       region
     })
-  };
+  }
 }

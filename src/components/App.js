@@ -8,9 +8,9 @@ import {Popover, PopoverAnimationVertical} from 'material-ui/Popover'
 import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu'
 import {grey50} from 'material-ui/styles/colors'
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actions from '../actions/LoginActions';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import * as actions from '../actions/LoginActions'
 class App extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -104,12 +104,12 @@ function mapStateToProps(state, ownprops) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(actions, dispatch)
-  };
+  }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(App)
 
 

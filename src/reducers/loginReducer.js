@@ -1,8 +1,8 @@
-import * as types from '../constants/actionTypes';
+import * as types from '../constants/actionTypes'
 import {AUTHENTICATED, DEFAULT, ERROR, LOADING} from '../constants/loginStates'
 import initialState from './initialState'
 
-const objectAssign = require('object-assign');
+const objectAssign = require('object-assign')
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
 // State is considered immutable. Instead,
@@ -28,6 +28,6 @@ export default function loginReducer(state = initialState.user, action) {
     }
 
     default:
-      return state;
+      return state
   }
 }

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
-import {List, ListItem} from 'material-ui/List';
-import Divider from 'material-ui/Divider';
+import {List, ListItem} from 'material-ui/List'
+import Divider from 'material-ui/Divider'
 
 const StatusListItem = props => {
   let memberCount = props.teams.map(team => team.members.length).reduce((a, b) => a + b, 0)

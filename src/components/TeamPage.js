@@ -1,8 +1,8 @@
-import * as actions from '../actions/StatusActions';
-import React from 'react';
+import * as actions from '../actions/StatusActions'
+import React from 'react'
 import TeamList from './TeamList'
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 export const TeamPage = (props) => {
   return (
@@ -11,8 +11,8 @@ export const TeamPage = (props) => {
       <TeamList
         teams={props.region.teams}/>
     </div>
-  );
-};
+  )
+}
 
 TeamPage.propTypes = {
   region: React.PropTypes.object,
@@ -34,12 +34,12 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(actions, dispatch)
-  };
+  }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TeamPage);
+)(TeamPage)
 
 
