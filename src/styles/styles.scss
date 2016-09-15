@@ -55,3 +55,19 @@ button {
   margin: 0 auto;
   display: block;
 }
+
+.login-page-container {
+  .login-spinner-active {
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    visibility: visible;
+  }
+
+  .login-spinner-hidden {
+    width: 50px;
+    visibility: hidden;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

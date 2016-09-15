@@ -13,8 +13,8 @@ export const HomePage = (props) => {
   }
 
   return (
-    <div>
-        <div style={props.spinnerStyles}>
+    <div className="login-page-container">
+        <div className={props.spinnerStyle}>
           <CircularProgress />
         </div>
         <Login error={props.errorMessage} onClick={onLogin}/>
@@ -28,9 +28,7 @@ function mapStateToProps(state, ownprops) {
     data: state.loginReducer,
     loginState: state.loginReducer.loginState,
     errorMessage: state.loginReducer.loginState === ERROR ? errorMessage : null,
-    spinnerStyles: {
-      display: state.loginReducer.loginState === LOADING ? 'block' : 'hidden'
-    }
+    spinnerStyle: state.loginReducer.loginState === LOADING ? 'login-spinner-active' : 'login-spinner-hidden'
   }
 }
 
