@@ -6,29 +6,18 @@ import {createStore, compose, applyMiddleware} from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers';
+import { routerMiddleware } from 'react-router-redux';
 
-export default function configureStore(initialState) {
-    // const start = {
-    //   opacity: 0.5,
-    //   transition: 'opacity .5s ease-in-out'
-    // }
-
-    // const end = {
-    //   opacity: 1,
-    //   transition: 'opacity .5s ease-in-out'
-    // }
-
-    // const endFail = {
-    //   opacity: 1,
-    //   border: 'solid red 1px',
-    //   transition: 'opacity .5s ease-in-out'
-    // }
+export default function configureStore(initialState, browserHistory) {
 
   const middewares = [
     // Add other middleware on this line...
 
     // Redux middleware that spits an error on you when you try to mutate your state either inside a dispatch or between dispatches.
     reduxImmutableStateInvariant(),
+
+    // To support dipatch push (route) in actions
+    routerMiddleware(browserHistory),
 
     // thunk middleware can also accept an extra argument to be passed to each thunk action
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
