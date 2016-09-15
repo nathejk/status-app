@@ -33,7 +33,7 @@ const StatusListItem = props => {
 StatusListItem.propTypes = {
   members: React.PropTypes.array,
   name: React.PropTypes.string,
-  scans: React.PropTypes.string,
+  scans: React.PropTypes.number,
   onClick: React.PropTypes.func
 }
 
