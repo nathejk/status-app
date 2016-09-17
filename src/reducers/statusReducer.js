@@ -14,7 +14,9 @@ export default function statusReducer(state = initialState.data, action) {
     }
 
     case (types.RECEIVE_POSTS): {
-      return objectAssign({}, state, action.data)
+      let data = action.data.regions.sort((a, b) => b.scans - a.scans)
+
+      return objectAssign({}, state, {regions: data})
     }
 
     default:
