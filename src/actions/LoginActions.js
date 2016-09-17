@@ -6,13 +6,13 @@ import fetch from 'isomorphic-fetch'
 export function login(phone) {
 return dispatch => {
     dispatch(requestPosts(phone))
-    return fetch(`http://localhost:3000/status?phone=${phone}`, {
-      // return fetch(`http://tilmelding.nathejk.dk/status?phone=${phone}`, {
+    // return fetch(`http://localhost:3000/status?phone=${phone}`, {
+    return fetch(`http://tilmelding.nathejk.dk/status?phone=${phone}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      },
+      }
     })
       .then(checkStatus)
       .then(parseJSON)
