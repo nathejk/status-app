@@ -9,6 +9,7 @@ const TeamList = (props) => {
       return (
         <TeamListItem
           key={member.id}
+          number={member.number}
           name={member.name}
           phone={member.phone}
           onClick={() => console.log(`name: ${member.name} team: ${team.name}`)} />

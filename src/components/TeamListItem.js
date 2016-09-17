@@ -11,13 +11,14 @@ const TeamListItem = props => {
   } else {
     avatar = <SocialPersonOutline />
   }
+  let name = `${props.number} - ${props.name}`
 
   return (
     <div>
       <Divider/>
       <ListItem
         onClick={() => props.onClick()}
-        primaryText={props.name}
+        primaryText={name}
         secondaryText={
           <a href={`tel:${props.phone}`}>
             {props.phone}
