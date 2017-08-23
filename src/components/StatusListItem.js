@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react'
-import {List, ListItem} from 'material-ui/List'
+import React from 'react'
+import {ListItem} from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 
 const StatusListItem = props => {
@@ -8,19 +8,19 @@ const StatusListItem = props => {
 
   return (
     <div>
-      <Divider/>
+      <Divider />
       <ListItem
         onClick={() => props.onClick()}
         primaryText={props.name}
         secondaryText={
           <div>
             Teams: {teamCount}
-            <br/>
+            <br />
             Members: {memberCount}
           </div>
         }
         secondaryTextLines={2}
-        rightAvatar= {
+        rightAvatar={
           <div>
             {props.scans}
           </div>

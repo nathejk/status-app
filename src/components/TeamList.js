@@ -1,6 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router'
-import {List, ListItem} from 'material-ui/List'
+import {List} from 'material-ui/List'
 import TeamListItem from './TeamListItem'
 
 const TeamList = (props) => {
@@ -19,12 +18,12 @@ const TeamList = (props) => {
     return (
       <List
         key={team.id}>
-          <h3>
-            {team.name}
-          </h3>
-          {memberItems}
+        <h3>
+          {team.name}
+        </h3>
+        {memberItems}
       </List>)
-    })
+  })
 
   return (
     <div>
@@ -34,7 +33,7 @@ const TeamList = (props) => {
 }
 
 TeamList.propTypes = {
-  region: React.PropTypes.array,
+  region: React.PropTypes.array
 }
 
 export default TeamList

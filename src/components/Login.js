@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
@@ -15,10 +15,10 @@ class Login extends Component {
 
   render () {
     return (
-    <div>
-      <TextField errorText={this.props.error} value={this.state.phone} onChange={this.handleChange} floatingLabelText="Username" name="phone"/>
-      <RaisedButton label="Login" onClick={() => this.props.onClick(this.state.phone)}/>
-    </div>
+      <div>
+        <TextField errorText={this.props.error} value={this.state.phone} onChange={this.handleChange} floatingLabelText='Username' name='phone' />
+        <RaisedButton label='Login' onClick={() => this.props.onClick(this.state.phone)} />
+      </div>
     )
   }
 }

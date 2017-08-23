@@ -1,18 +1,16 @@
 import React, { PropTypes } from 'react'
-import { Link, IndexLink, browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 import AppBar from 'material-ui/AppBar'
-import FlatButton from 'material-ui/FlatButton'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import {Popover, PopoverAnimationVertical} from 'material-ui/Popover'
-import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu'
 import {grey50} from 'material-ui/styles/colors'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as actions from '../actions/LoginActions'
 class App extends React.Component {
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
 
     this.state = {
@@ -45,27 +43,27 @@ class App extends React.Component {
     this.handleMenuItemSelected('/')
   }
 
-  render() {
+  render () {
     let menu
     if (this.props.loggedIn) {
       menu = (
         <Menu>
-          <MenuItem primaryText="Home" onClick={() => this.handleMenuItemSelected('/')}/>
-          <MenuItem primaryText="Status" onClick={() => this.handleMenuItemSelected('/status')}/>
-          <MenuItem primaryText="Sign out" onClick={this.handleLogOut}/>
+          <MenuItem primaryText='Home' onClick={() => this.handleMenuItemSelected('/')} />
+          <MenuItem primaryText='Status' onClick={() => this.handleMenuItemSelected('/status')} />
+          <MenuItem primaryText='Sign out' onClick={this.handleLogOut} />
         </Menu>)
     } else {
       menu = (
-            <Menu>
-              <MenuItem primaryText="Home" onClick={() => this.handleMenuItemSelected('/')}/>
-            </Menu>)
+        <Menu>
+          <MenuItem primaryText='Home' onClick={() => this.handleMenuItemSelected('/')} />
+        </Menu>)
     }
 
     return (
       <div>
         <AppBar
-          className="app-bar"
-          title="Nathejk"
+          className='app-bar'
+          title='Nathejk'
           iconElementLeft={
             <div>
               <NavigationMenu color={grey50} onClick={this.handleTouchTap} />
@@ -80,9 +78,9 @@ class App extends React.Component {
               </Popover>
             </div>
           }
-          style={{backgroundColor:'black'}}
+          style={{backgroundColor: 'black'}}
         />
-        <br/>
+        <br />
         <div className='page-wrapper'>
           {this.props.children}
         </div>
@@ -95,13 +93,13 @@ App.propTypes = {
   children: PropTypes.element
 }
 
-function mapStateToProps(state, ownprops) {
+function mapStateToProps (state, ownprops) {
   return {
     loggedIn: state.loginReducer.loginState === 'AUTHENTICATED'
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions, dispatch)
   }
@@ -111,5 +109,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App)
-
-

@@ -9,7 +9,6 @@ import chai, { expect } from 'chai'
 chai.use(sinonChai)
 
 describe('Actions', () => {
-  let dateModified
   before(() => {
     MockDate.set(new Date())
   })
@@ -18,7 +17,7 @@ describe('Actions', () => {
   const appState = {
     regions: [{
       id: 1
-    },{
+    }, {
       id: 2
     }]
   }

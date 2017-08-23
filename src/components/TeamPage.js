@@ -17,23 +17,21 @@ export const TeamPage = (props) => {
     )
   })
 
-
   return (
     <div>
-      <h2 className="alt-header">{props.region.name}</h2>
+      <h2 className='alt-header'>{props.region.name}</h2>
       {memberItems}
       <TeamList
-        teams={props.region.teams}/>
+        teams={props.region.teams} />
     </div>
   )
 }
 
 TeamPage.propTypes = {
-  region: React.PropTypes.object,
+  region: React.PropTypes.object
 }
 
-function mapStateToProps(state, ownProps) {
-  let newState
+function mapStateToProps (state, ownProps) {
   if (state.routing.locationBeforeTransitions) {
     return {
       region: state.routing.locationBeforeTransitions.state
@@ -45,7 +43,7 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions, dispatch)
   }
@@ -55,5 +53,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(TeamPage)
-
-

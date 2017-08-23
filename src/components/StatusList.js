@@ -4,7 +4,6 @@ import StatusListItem from './StatusListItem'
 import { browserHistory } from 'react-router'
 const StatusList = (props) => {
   let listItems = props.regions === undefined ? null : props.regions.map((region) => {
-
     return (
       <StatusListItem
         key={region.id}
@@ -15,9 +14,8 @@ const StatusList = (props) => {
           pathname: `/team/${region.id}`,
           state: region
         })} />
-        )
-
-    })
+    )
+  })
 
   return (
     <List>
@@ -27,7 +25,7 @@ const StatusList = (props) => {
 }
 
 StatusList.propTypes = {
-  regions: React.PropTypes.array,
+  regions: React.PropTypes.array
 }
 
 export default StatusList

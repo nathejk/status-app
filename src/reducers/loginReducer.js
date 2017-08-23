@@ -9,7 +9,7 @@ const objectAssign = require('object-assign')
 // create a copy of the state passed and set new values on the copy.
 // Note that I'm using Object.assign to create a copy of current state
 // and update values on the copy.
-export default function loginReducer(state = initialState.user, action) {
+export default function loginReducer (state = initialState.user, action) {
   switch (action.type) {
     case (types.REQUEST_POSTS): {
       return objectAssign({}, state, {loginState: LOADING})
