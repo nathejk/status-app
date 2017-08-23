@@ -1,18 +1,13 @@
-FROM node:argon
-
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-# Install app dependencies
-COPY package.json /usr/src/app/
+FROM node:8-alpine
+WORKDIR /app
+COPY package.json ./
 RUN npm install
 
-# Bundle app source
-COPY . /usr/src/app
+COPY . .
 
-EXPOSE 3000
+RUN npm rebuild node-sass
 
 ENV NODE_ENV production
+EXPOSE 3000
 
 CMD [ "npm", "run", "build" ]
