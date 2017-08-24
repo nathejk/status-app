@@ -1,0 +1,6 @@
+{
+  "name": "server",
+  "dependencies": {
+    "http-server": "^0.10.0"
+  }
+}

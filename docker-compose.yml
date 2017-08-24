@@ -1,0 +1,11 @@
+version: "2.1"
+services:
+  api:
+    build: .
+    command: "node node_modules/http-server/bin/http-server --cors -s"
+    ports:
+      - "3000:3000"
+    restart: always
+    environment:
+      PORT: 3000 # this is optional, allows express to use process.env.PORT instead of a raw 3000
+      NODE_ENV: production
