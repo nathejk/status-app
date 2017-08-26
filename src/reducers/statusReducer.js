@@ -14,6 +14,10 @@ export default function statusReducer (state = initialState.data, action) {
       return objectAssign({}, state, {regions: data})
     }
 
+    case (types.LOG_OUT): {
+      return initialState
+    }
+
     default:
       return state
   }

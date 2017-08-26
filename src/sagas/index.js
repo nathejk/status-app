@@ -2,6 +2,7 @@ import { delay } from 'redux-saga'
 import { put, call, all, takeEvery, takeLatest, select } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import * as actions from '../constants/actionTypes'
+import {AUTHENTICATED} from '../constants/loginStates'
 import {receivePosts} from '../actions/LoginActions'
 import api from '../api'
 import {saveState} from '../localStorage'
@@ -29,16 +30,28 @@ function * login ({phone}) {
   }
 }
 
+function * ensureRoute ({payload: {pathname}}) {
+  yield call(delay, 50)
+  const state = yield select(getState)
+  if (state.loginReducer.loginState === AUTHENTICATED && pathname === '/') {
+    yield put(push('/status'))
+  } else if (state.loginReducer.loginState !== AUTHENTICATED && pathname !== '/') {
+    yield put(push('/'))
+  }
+}
+
 function * saveStateOnUpdates ({phone}) {
   yield call(delay, 100)
 
   const state = yield select(getState)
-  saveState(state)
+
+  saveState({...state, routing: undefined})
 }
 
 export default function * rootSaga () {
   yield all([
     takeEvery('*', saveStateOnUpdates),
-    takeLatest(actions.REQUEST_POSTS, login)
+    takeLatest(actions.REQUEST_POSTS, login),
+    takeLatest('@@router/LOCATION_CHANGE', ensureRoute)
   ])
 }
