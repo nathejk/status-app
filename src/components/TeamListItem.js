@@ -10,7 +10,8 @@ const TeamListItem = props => {
   } else {
     avatar = <SocialPersonOutline />
   }
-  let name = `${props.number} - ${props.name}`
+
+  let name = props.number ? `${props.number} - ${props.name}` : props.name
 
   return (
     <div>
