@@ -2,11 +2,14 @@
 // This boilerplate file is likely to be the same for each project that uses Redux.
 // With Redux, the actual stores are in /reducers.
 
-import {createStore, compose, applyMiddleware} from 'redux'
+import { createStore, compose, applyMiddleware } from 'redux'
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant'
-import thunkMiddleware from 'redux-thunk'
-import rootReducer from '../reducers'
 import { routerMiddleware } from 'react-router-redux'
+import createSagaMiddleware from 'redux-saga'
+import rootReducer from '../reducers'
+import rootSaga from '../sagas'
+
+const sagaMiddleware = createSagaMiddleware()
 
 export default function configureStore (initialState, browserHistory) {
   const middewares = [
@@ -17,17 +20,16 @@ export default function configureStore (initialState, browserHistory) {
 
     // To support dipatch push (route) in actions
     routerMiddleware(browserHistory),
-
-    // thunk middleware can also accept an extra argument to be passed to each thunk action
-    // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
-    thunkMiddleware
+    sagaMiddleware
   ]
 
   const store = createStore(rootReducer, initialState, compose(
     applyMiddleware(...middewares),
     window.devToolsExtension ? window.devToolsExtension() : f => f // add support for Redux dev tools
-    )
   )
+  )
+
+  sagaMiddleware.run(rootSaga)
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

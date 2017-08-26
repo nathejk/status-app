@@ -9,7 +9,6 @@ class Login extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event.target.value)
     this.setState({phone: event.target.value})
   }
 
