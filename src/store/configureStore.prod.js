@@ -3,7 +3,7 @@ import rootReducer from '../reducers'
 import { routerMiddleware } from 'react-router-redux'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from '../sagas'
-
+import {loadState} from '../localStorage'
 const sagaMiddleware = createSagaMiddleware()
 
 export default function configureStore (initialState, browserHistory) {
@@ -13,7 +13,7 @@ export default function configureStore (initialState, browserHistory) {
     sagaMiddleware
   ]
 
-  const store = createStore(rootReducer, initialState, compose(
+  const store = createStore(rootReducer, loadState(), compose(
     applyMiddleware(...middewares)
     )
   )

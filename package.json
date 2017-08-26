@@ -111,6 +111,7 @@
   "standard": {
     "parser": "babel-eslint",
     "globals": [
+      "localStorage",
       "xdescribe",
       "xit",
       "describe",

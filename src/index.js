@@ -14,6 +14,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 require('./favicon.ico') // Tell webpack to load favicon.ico
+
 const store = configureStore(undefined, browserHistory)
 
 // Create an enhanced history that syncs navigation events with the store
