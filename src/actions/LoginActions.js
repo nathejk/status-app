@@ -18,7 +18,7 @@ export const logOut = () => ({
 export const receivePosts = (phone, data) => ({
   type: types.RECEIVE_POSTS,
   phone,
-  data: data,
+  data: data.default || data, // TODO: MOCK ISSUE?
   receivedAt: Date.now()
 })
 
