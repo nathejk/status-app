@@ -77,11 +77,12 @@ function * saveStateOnUpdates ({phone}) {
 
   const state = yield select(getState)
 
-  saveState({...state, routing: undefined})
+  saveState({...state, routing: undefined, msg: undefined})
 }
 
 export default function * rootSaga () {
   yield all([
+    ...msgSagas(),
     takeEvery('*', saveStateOnUpdates),
     takeLatest(actions.REQUEST_POSTS, login),
     takeLatest('@@router/LOCATION_CHANGE', ensureRoute)

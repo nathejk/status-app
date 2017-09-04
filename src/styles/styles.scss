@@ -20,11 +20,13 @@ body {
 .page-wrapper {
   margin-left: 15px;
   margin-right: 15px;
+  height: 80vh;
 }
 
 .wrapper {
   margin: 0 auto;
   display: flex;
+  height: 100%;
   min-height: 100%;
   max-width: calc(768px + 16px * 2);
   flex-direction: column;
@@ -69,5 +71,65 @@ button {
     visibility: hidden;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+.chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 85vh;
+
+ h1 {
+   display: flex;
+ }
+
+  .top-container {
+    flex: 1;
+    display: flex;
+    overflow-wrap: normal;
+    overflow-y: scroll;
+    flex-grow: 20;
+
+    // flex-grow: 1;
+    // max-height: 80%;
+    // height: calc(768px + 48px);
+    // overflow-y: scroll;
+    // flex-shrink: 1;
+    // align-self: flex-start;
+    div {
+      flex: 1;
+    }
+  }
+
+  .input-container {
+    flex: 1;
+    display: flex;
+    flex-grow: 2;
+    flex-flow: column;
+    align-self: stretch;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    > div:first-of-type {
+      margin-right: 20px;
+    }
+  }
+
+  .chat-message {
+    margin-top: 10px;
+
+    .time {
+      color: #4d4d4d;
+    }
+
+    .user {
+      color: #4d4d4d;
+      margin-right: 15px;
+    }
+
+    .text {
+      color: #4d4d4d
+    }
   }
 }

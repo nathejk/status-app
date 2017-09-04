@@ -1,4 +1,5 @@
 import * as actions from '../actions/StatusActions'
+import * as msgActions from '../actions/MsgActions'
 import React from 'react'
 import StatusList from './StatusList'
 import {connect} from 'react-redux'
@@ -13,6 +14,7 @@ export const StatusPage = (props) => {
   return (
     <div>
       <h2 className='alt-header'>Status</h2>
+      <i className={'material-icons'} onClick={() => props.navigateToBanditChat()}>question_answer</i>
       <StatusList
         onClick={onRegionClick}
         regions={props.data.regions} />
@@ -34,10 +36,12 @@ function mapStateToProps (state, ownprops) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  }
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    ...actions,
+    navigateToBanditChat: msgActions.openChat
+  },
+  dispatch)
 }
 
 export default connect(
