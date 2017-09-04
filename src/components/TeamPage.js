@@ -10,9 +10,7 @@ export const TeamPage = (props) => {
     return (
       <TeamListItem
         key={member.id}
-        name={member.name}
-        number={member.number}
-        phone={member.phone}
+        {...member}
         onClick={() => console.log(`name: ${member.name}`)} />
     )
   })

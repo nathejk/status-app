@@ -10,10 +10,7 @@ const StatusList = (props) => {
         teams={region.teams}
         name={region.name}
         scans={region.scans}
-        onClick={() => browserHistory.push({
-          pathname: `/team/${region.id}`,
-          state: region
-        })} />
+        onClick={() => props.onClick(region)} />
     )
   })
 
