@@ -3,9 +3,10 @@ import {ListItem} from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 import Avatar from 'material-ui/Avatar'
 import SocialPersonOutline from 'material-ui/svg-icons/social/person-outline'
+
 const TeamListItem = props => {
   let avatar
-  if (props.photoUrl) {
+  if (props.pictureUrl) {
     avatar = <Avatar src={props.pictureUrl} />
   } else {
     avatar = <SocialPersonOutline />
