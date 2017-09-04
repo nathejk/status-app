@@ -12,13 +12,15 @@
       "plugins": [
         "transform-react-constant-elements",
         "transform-react-remove-prop-types",
-        "transform-runtime"
+        "transform-runtime",
+        "ramda"
       ]
     },
     "production": {
       "plugins": [
         "transform-react-constant-elements",
         "transform-react-remove-prop-types",
+        "ramda",
         "transform-runtime", {
           "helpers": false,
           "polyfill": false,

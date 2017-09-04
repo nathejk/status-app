@@ -27,8 +27,7 @@ export default function configureStore (initialState, browserHistory) {
     applyMiddleware(...middewares),
     window.devToolsExtension ? window.devToolsExtension() : f => f // add support for Redux dev tools
   )
-  )
-
+)
   sagaMiddleware.run(rootSaga)
 
   if (module.hot) {
