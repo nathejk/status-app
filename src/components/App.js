@@ -50,6 +50,7 @@ class App extends React.Component {
         <Menu>
           <MenuItem primaryText='Home' onClick={() => this.handleMenuItemSelected('/')} />
           <MenuItem primaryText='Status' onClick={() => this.handleMenuItemSelected('/status')} />
+          <MenuItem primaryText='Chat' onClick={() => this.handleMenuItemSelected('/status/chat')} />
           <MenuItem primaryText='Sign out' onClick={this.handleLogOut} />
         </Menu>)
     } else {

@@ -4,6 +4,7 @@ import io from 'socket.io-client'
 import { push } from 'react-router-redux'
 import {getAuthenticatedState, getUserState} from './sagaHelpers'
 import * as actions from '../actions/MsgActions'
+import * as actionTypes from '../constants/actionTypes'
 
 export const MSG_API__JOIN_CHANNEL = 'join channel'
 export const MSG_API__LEAVE_CHANNEL = 'leave channel'
@@ -61,13 +62,22 @@ function createSocketChannel (socket) {
   })
 }
 let socket
+
+function * sendMessage ({payload: {channel, message}}) {
+  const user = yield select(getUserState)
+  socket.emit(MSG_API__NEW_MESSAGE, {channel, message, user})
+}
+
+process.env.CHAT_SERVER_URL = 'http://10.0.0.121'
+process.env.CHAT_SERVER_PORT = '3002'
+
 function * ensureRoute2 (action) {
   yield delay(10000)
   const authenticated = yield select(getAuthenticatedState)
   const user = yield select(getUserState)
   if (authenticated && !socket) {
     console.log(io)
-    socket = io(`http://localhost:3002?phone=${user}`)
+    socket = io(`${process.env.CHAT_SERVER_URL}:${process.env.CHAT_SERVER_PORT}?phone=${user.phone}`)
     socket.on('connect', () => {
       console.log(socket.id)
     })
@@ -92,7 +102,7 @@ export default function rootSaga () {
   return [
     // ensureRoute2
     // takeEvery([MSG_API__JOIN_CHANNEL, MSG_API__LEAVE_CHANNEL], socketFowarder),
-    // takeEvery(actions.MSG__NAVIGATE_TO_CHANNEL, startChat),
+    takeEvery(actionTypes.MSG__SEND_MESSAGE, sendMessage),
     // takeEvery(MSG__JOIN_CHANNEL, joinChannel),
     // takeEvery(MSG__LEAVE_CHANNEL, leaveChannel),
     // takeEvery('*', ensureRoute2)

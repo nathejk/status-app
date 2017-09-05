@@ -1,56 +1,74 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
-import * as actions from '../actions/LoginActions'
+import * as msgActions from '../actions/MsgActions'
 import { ERROR, LOADING } from '../constants/loginStates'
 import CircularProgress from 'material-ui/CircularProgress'
 import {List, ListItem} from 'material-ui/List'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
-export const HomePage = (props) => {
-  const listItems = props.messages.map(m => {
-    // return (<ListItem
-      // key={m.id}
-      // primaryText={`${m.user.name}   ${m.timestamp}`}
-      // secondaryText={m.message}
-      // />)
-    return (
-      <div className='chat-message'>
-        <div>
-          <strong className="user">{m.user.name}</strong>{m.createdAt.fromNow()}
+class ChatPage extends Component {
+  constructor (props, context) {
+    super(props, context)
+    this.state = {message: ''}
+  }
+
+  setMessage = (event, msg) => {
+    console.log(msg)
+    this.setState({message: msg})
+  }
+
+  sendMessage = () => {
+    this.props.sendMessage(this.state.message)
+    this.setState({message: ''})
+  }
+
+  renderMessages = () => {
+    return this.props.messages.map(m => {
+      const messageClass = `${m.user.id === this.props.user.id ? 'user-message' : ''} chat-message`
+      return (
+        <div className={messageClass}>
+          <div>
+            <strong className='user'>{m.user.name}</strong>{m.createdAt.fromNow()}
+          </div>
+          <div className='text'>
+            {m.message}
+          </div>
         </div>
-        <div className='text'>
-         {m.message}
+      )
+    })
+  }
+
+  render () {
+    return (
+      <div className='chat'>
+        <h1>
+          Bandit Chat
+        </h1>
+        <div id={'chat'} className='top-container'>
+          <List id={'chatList'}>
+            {this.renderMessages()}
+          </List>
+        </div>
+        <div className='input-container'>
+          <TextField
+            id='chat-input'
+            onFocus={() => document.getElementById('chat-input').scrollIntoView(true)}
+            hintText='Enter message'
+            value={this.state.message}
+            onChange={this.setMessage}
+            multiLine
+            fullWidth
+            rows={1}
+            rowsMax={1}
+            />
+          <RaisedButton label='Send' onClick={this.sendMessage} />
         </div>
       </div>
     )
-    })
-
-  return (
-    <div className='chat'>
-    <h1>
-    Bandit Chat
-    </h1>
-      <div id={"chat"} className='top-container'>
-
-        <List id={"chatList"}>
-          {listItems}
-        </List>
-      </div>
-      <div className='input-container'>
-        <TextField
-          hintText='Enter message'
-          multiLine
-          fullWidth
-          rows={1}
-          rowsMax={1}
-          />
-        <RaisedButton label='Send' onClick={() => this.props.onClick(this.state.phone)} />
-      </div>
-    </div>
-  )
+  }
 }
 
 function mapStateToProps (state, ownprops) {
@@ -60,13 +78,20 @@ function mapStateToProps (state, ownprops) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  }
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    sendMessage: msgActions.sendMessage
+  },
+  dispatch)
 }
+
+// function mapDispatchToProps (dispatch) {
+//   return {
+//     actions: bindActionCreators(actions, dispatch)
+//   }
+// }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomePage)
+)(ChatPage)
