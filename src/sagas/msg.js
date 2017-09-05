@@ -50,7 +50,10 @@ function createSocketChannel (socket) {
     socket.on(MSG_API__NEW_MESSAGE, (message) => {
       console.log(message)
       emit(actions.messageRecieved(message))
-      document.getElementById('chat').scrollTop = Number.MAX_SAFE_INTEGER
+      const elements = document.getElementsByClassName('text')
+      if (elements && elements.length > 1) {
+        elements[elements.length - 1].scrollIntoView()
+      }
     })
     // the subscriber must return an unsubscribe function
     // this will be invoked when the saga calls `channel.close` method
