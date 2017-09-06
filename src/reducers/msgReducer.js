@@ -1,7 +1,6 @@
 import R, {append} from 'Ramda'
 import * as types from '../constants/actionTypes'
 import moment from 'moment'
-const objectAssign = require('object-assign')
 
 const msgByDesc = R.descend(R.prop('sendAt'))
 

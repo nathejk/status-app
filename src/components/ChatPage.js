@@ -1,11 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import moment from 'moment'
 import * as msgActions from '../actions/MsgActions'
-import { ERROR, LOADING } from '../constants/loginStates'
-import CircularProgress from 'material-ui/CircularProgress'
-import {List, ListItem} from 'material-ui/List'
+import {List} from 'material-ui/List'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -84,12 +81,6 @@ const mapDispatchToProps = dispatch => {
   },
   dispatch)
 }
-
-// function mapDispatchToProps (dispatch) {
-//   return {
-//     actions: bindActionCreators(actions, dispatch)
-//   }
-// }
 
 export default connect(
   mapStateToProps,

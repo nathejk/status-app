@@ -1,7 +1,7 @@
 import React from 'react'
 import {List} from 'material-ui/List'
 import StatusListItem from './StatusListItem'
-import { browserHistory } from 'react-router'
+
 const StatusList = (props) => {
   let listItems = props.regions === undefined ? null : props.regions.map((region) => {
     return (

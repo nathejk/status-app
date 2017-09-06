@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga'
-import { put, call, fork, all, takeEvery, takeLatest, select } from 'redux-saga/effects'
+import { put, call, all, takeEvery, takeLatest, select } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
 import * as actions from '../constants/actionTypes'
 import {AUTHENTICATED} from '../constants/loginStates'

@@ -1,7 +1,7 @@
-import { delay, eventChannel, runSaga } from 'redux-saga'
-import { put, take, fork, call, all, takeEvery, takeLatest, select } from 'redux-saga/effects'
+import { delay, eventChannel } from 'redux-saga'
+import { put, take, fork, call, takeEvery, select } from 'redux-saga/effects'
 import io from 'socket.io-client'
-import { push } from 'react-router-redux'
+// import { push } from 'react-router-redux'
 import {getAuthenticatedState, getUserState} from './sagaHelpers'
 import * as actions from '../actions/MsgActions'
 import * as actionTypes from '../constants/actionTypes'
@@ -11,13 +11,13 @@ export const MSG_API__LEAVE_CHANNEL = 'leave channel'
 export const MSG_API__NEW_MESSAGE = 'new message'
 // export const MSG_API__ = 'leave channel'
 
-function * socketFowarder ({type: socketCommandChannel, payload}) {
-  socket.emit(socketCommandChannel, payload)
-}
+// function * socketFowarder ({type: socketCommandChannel, payload}) {
+//   socket.emit(socketCommandChannel, payload)
+// }
 
-function * startChat ({type: socketCommandChannel, payload}) {
-  yield put(push('/status/chat/'))
-}
+// function * startChat ({type: socketCommandChannel, payload}) {
+//   yield put(push('/status/chat/'))
+// }
 
 // function* joinChannel({payload: channel}) {
 //   socket.emit(MSG_API__JOIN_CHANNEL, channel)
