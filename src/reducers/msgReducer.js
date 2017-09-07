@@ -1,4 +1,4 @@
-import R, {append} from 'Ramda'
+import R, {append} from 'ramda'
 import * as types from '../constants/actionTypes'
 import moment from 'moment'
 
