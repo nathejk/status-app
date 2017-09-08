@@ -11,7 +11,7 @@ services:
       NODE_ENV: production
   api:
     build: .
-    command: "node node_modules/http-server/bin/http-server --cors -s"
+    command: "node server.js"
     ports:
       - "3000:3000"
     restart: always
