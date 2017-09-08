@@ -1,8 +1,22 @@
-language: node_js
+sudo: required
+
+language: node
 node_js:
-  - "6"
-  - "5"
-  - "4"
+  - "node"
+
+services:
+  - docker
+
+before_script:
+  - npm install standard babel-eslint
+script: npm run lint:standard
+
+before_install:
+  - docker build -t nathejk/status-app .
+
 after_success:
-  # Send coverage data to coveralls.
-  - npm run test:cover:travis
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker tag nathejk/status-app:latest nathejk/status-app:$TRAVIS_BUILD_NUMBER;
+    docker push nathejk/status-app;
+    fi
