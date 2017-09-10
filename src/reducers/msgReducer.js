@@ -10,12 +10,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case (types.MSG__NAVIGATE_TO_CHANNEL): {
-      // let data = action.data.regions.sort((a, b) => b.scans - a.scans)
-
-      // return objectAssign({}, state, {regions: data})
-    // }
-
     case (types.LOG_OUT): {
       return {}
     }
@@ -23,8 +17,14 @@ export default (state = initialState, action) => {
     case (types.MSG__CONNECTED): {
       return {
         ...state,
-        //  usersConnected: append(action.payload, state.usersConnected),
-        messages: R.sort(msgByDesc, state.messages)
+        connected: true
+      }
+    }
+
+    case (types.MSG__DISCONNECTED): {
+      return {
+        ...state,
+        connected: false
       }
     }
 
@@ -36,9 +36,10 @@ export default (state = initialState, action) => {
     }
 
     case (types.MSG__NEW_MESSAGE_RECEIVED): {
-      const message = {...action.payload, createdAt: moment(action.createdAt)}
+      const message = {...action.payload, createdAt: moment(action.payload.createdAt)}
+      const messages = R.sort(msgByDesc, append(message, state.messages))
 
-      return {...state, messages: append(message, state.messages)}
+      return {...state, messages, lastMessageReceivedAt: R.last(messages).createdAt}
     }
 
     default:

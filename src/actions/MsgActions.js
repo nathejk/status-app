@@ -1,4 +1,12 @@
-import {MSG__USER_CONNECTED, MSG__NAVIGATE_TO_CHANNEL, MSG__SEND_MESSAGE, MSG__NEW_MESSAGE_RECEIVED} from '../constants/actionTypes'
+import {MSG__USER_CONNECTED, MSG__CONNECTED, MSG__DISCONNECTED, MSG__NAVIGATE_TO_CHANNEL, MSG__SEND_MESSAGE, MSG__NEW_MESSAGE_RECEIVED} from '../constants/actionTypes'
+
+export const connected = () => ({
+  type: MSG__CONNECTED
+})
+
+export const disconnected = () => ({
+  type: MSG__DISCONNECTED
+})
 
 export const userConnected = (user) => ({
   type: MSG__USER_CONNECTED,

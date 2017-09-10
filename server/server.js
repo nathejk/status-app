@@ -2,10 +2,19 @@ const path = require('path')
 var app = require('http').createServer(handler)
 var fs = require('fs')
 var url = require('url')
+var request = require('request')
 
 app.listen(process.env.PORT || 3000)
 function handler (req, res) {
   const reqUrl = url.parse(req.url, true)
+  if (req.url.lastIndexOf('/proxy?', 0) === 0) {
+    var x = request(req.url.substring('7'))
+    console.log(req.url.substring('7'))
+    req.pipe(x)
+    x.pipe(res)
+    return
+  }
+
   let filePath = decodeURIComponent(reqUrl.pathname)
 
   const readFile = (err, data) => {

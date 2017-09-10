@@ -13,7 +13,6 @@ class ChatPage extends Component {
   }
 
   setMessage = (event, msg) => {
-    console.log(msg)
     this.setState({message: msg})
   }
 
@@ -23,6 +22,10 @@ class ChatPage extends Component {
   }
 
   renderMessages = () => {
+    if (!this.props.messages) {
+      return
+    }
+
     return this.props.messages.map(m => {
       const messageClass = `${m.user.id === this.props.user.id ? 'user-message' : ''} chat-message`
       return (

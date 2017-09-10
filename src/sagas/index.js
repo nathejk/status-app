@@ -74,10 +74,12 @@ function * ensureRoute ({payload: {pathname}}) {
 
 function * saveStateOnUpdates ({phone}) {
   yield call(delay, 100)
-
   const state = yield select(getState)
-
-  saveState({...state, routing: undefined, msg: undefined})
+  if (state.loginReducer.loginState === AUTHENTICATED) {
+    saveState({...state, routing: undefined, msg: undefined})
+  } else {
+    saveState({})
+  }
 }
 
 export default function * rootSaga () {

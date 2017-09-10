@@ -4,12 +4,11 @@ require('es6-promise').polyfill()
 
 export default {
   login (phone) {
-    return fetch(`http://tilmelding.nathejk.dk/status?phone=${phone}`, {
+    return fetch(`/proxy?http://tilmelding.nathejk.dk/status?phone=${phone}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Origin': 'tilmelding.nathejk.dk'
+        'Content-Type': 'application/json'
       }
     }).then(checkStatus)
     .then(parseJSON)

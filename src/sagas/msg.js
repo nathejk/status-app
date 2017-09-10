@@ -1,52 +1,29 @@
 import { delay, eventChannel } from 'redux-saga'
-import { put, take, fork, call, takeEvery, select } from 'redux-saga/effects'
+import { put, take, fork, call, takeLatest, takeEvery, select } from 'redux-saga/effects'
 import io from 'socket.io-client'
 // import { push } from 'react-router-redux'
-import {getAuthenticatedState, getUserState} from './sagaHelpers'
+import {getAuthenticatedState, getUserState, getLastRecievedMessageAt} from './sagaHelpers'
 import * as actions from '../actions/MsgActions'
 import * as actionTypes from '../constants/actionTypes'
 
 export const MSG_API__JOIN_CHANNEL = 'join channel'
+export const MSG_API__GET_MESSAGES_FROM = 'MSG_API__GET_MESSAGES_FROM'
 export const MSG_API__LEAVE_CHANNEL = 'leave channel'
 export const MSG_API__NEW_MESSAGE = 'new message'
-// export const MSG_API__ = 'leave channel'
-
-// function * socketFowarder ({type: socketCommandChannel, payload}) {
-//   socket.emit(socketCommandChannel, payload)
-// }
-
-// function * startChat ({type: socketCommandChannel, payload}) {
-//   yield put(push('/status/chat/'))
-// }
-
-// function* joinChannel({payload: channel}) {
-//   socket.emit(MSG_API__JOIN_CHANNEL, channel)
-// }
-
-// function* joinChannel({payload: channel}) {
-//   socket.emit(MSG_API__JOIN_CHANNEL, channel)
-// }
 
 function createSocketChannel (socket) {
-  // `eventChannel` takes a subscriber function
-  // the subscriber function takes an `emit` argument to put messages onto the channel
   return eventChannel(emit => {
-    // const pingHandler = (event) => {
-    //   console.log(event)
-    //   if (!event) {
-    //     return
-    //   }
-    //   // puts event payload into the channel
-    //   // this allows a Saga to take this payload from the returned channel
-    //   emit(event)
-    // }
-
-    // setup the subscription
-    // socket.on('ping', pingHandler)
-    socket.on('user connected', (user) => {
-      // console.log(user)
-      // emit(actions.userConnected(user))
+    socket.on('connect', () => {
+      emit(actions.connected())
     })
+
+    socket.on('disconnect', () => {
+      emit(actions.disconnected())
+    })
+
+    socket.on('user connected', (user) => {
+    })
+
     socket.on(MSG_API__NEW_MESSAGE, (message) => {
       console.log(message)
       emit(actions.messageRecieved(message))
@@ -71,20 +48,19 @@ function * sendMessage ({payload: {channel, message}}) {
   socket.emit(MSG_API__NEW_MESSAGE, {channel, message, user})
 }
 
-process.env.CHAT_SERVER_URL = 'http://10.0.0.121'
+function * checkServerForNewMessages () {
+  const fromDate = yield select(getLastRecievedMessageAt)
+  socket.emit(MSG_API__GET_MESSAGES_FROM, {channel: 'nathejk', fromDate: fromDate || new Date('2013-10-01T00:00:00.000Z')})
+}
+
+process.env.CHAT_SERVER_URL = '//'
 process.env.CHAT_SERVER_PORT = '3002'
 
-function * ensureRoute2 (action) {
-  yield delay(10000)
+function * connectToChatServer () {
   const authenticated = yield select(getAuthenticatedState)
   const user = yield select(getUserState)
   if (authenticated && !socket) {
-    console.log(io)
     socket = io(`${process.env.CHAT_SERVER_URL}:${process.env.CHAT_SERVER_PORT}?phone=${user.phone}`)
-    socket.on('connect', () => {
-      console.log(socket.id)
-    })
-
     const socketChannel = yield call(createSocketChannel, socket)
     console.log(socketChannel)
 
@@ -93,26 +69,25 @@ function * ensureRoute2 (action) {
       console.log(payload)
       yield put(payload)
     }
-
-    // const ios = io.Socket.connect(`http://localhost:3002`)
-  } else {
-    yield take(actions.RECEIVE_POSTS, ensureRoute2)
   }
 }
 
+function * ensureRoute (action) {
+  yield delay(1000)
+
+  yield fork(connectToChatServer)
+}
+
 export default function rootSaga () {
-  console.log(`msg`)
   return [
     // ensureRoute2
     // takeEvery([MSG_API__JOIN_CHANNEL, MSG_API__LEAVE_CHANNEL], socketFowarder),
     takeEvery(actionTypes.MSG__SEND_MESSAGE, sendMessage),
-    // takeEvery(MSG__JOIN_CHANNEL, joinChannel),
-    // takeEvery(MSG__LEAVE_CHANNEL, leaveChannel),
-    // takeEvery('*', ensureRoute2)
-    fork(ensureRoute2)
+    takeEvery(actionTypes.MSG__CONNECTED, checkServerForNewMessages),
+    fork(connectToChatServer),
 
     // takeEvery('*', saveStateOnUpdates),
-    // takeLatest(actions.REQUEST_POSTS, ensureRoute2)
-    // takeLatest('@@router/LOCATION_CHANGE', ensureRoute2)
+    takeLatest(actionTypes.RECEIVE_POSTS, ensureRoute),
+    takeLatest('@@router/LOCATION_CHANGE', ensureRoute)
   ]
 }
