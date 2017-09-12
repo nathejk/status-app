@@ -76,7 +76,7 @@ function * saveStateOnUpdates ({phone}) {
   yield call(delay, 100)
   const state = yield select(getState)
   if (state.loginReducer.loginState === AUTHENTICATED) {
-    saveState({...state, routing: undefined, msg: undefined})
+    saveState({...state, routing: undefined})
   } else {
     saveState({})
   }

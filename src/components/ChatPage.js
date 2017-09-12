@@ -5,7 +5,9 @@ import * as msgActions from '../actions/MsgActions'
 import {List} from 'material-ui/List'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-
+import ConnectionOff from 'material-ui/svg-icons/action/perm-scan-wifi'
+import ConnectionOn from 'material-ui/svg-icons/notification/wifi'
+import {red500, green500} from 'material-ui/styles/colors'
 class ChatPage extends Component {
   constructor (props, context) {
     super(props, context)
@@ -41,12 +43,17 @@ class ChatPage extends Component {
     })
   }
 
+  renderConnection = () => {
+    return this.props.connected ? <ConnectionOn className={'connection-state'} color={green500} /> : <ConnectionOff className='connection-state' color={red500} />
+  }
+
   render () {
     return (
       <div className='chat'>
         <h1>
-          Bandit Chat
+          Bandit Chat{this.renderConnection()}
         </h1>
+
         <div id={'chat'} className='top-container'>
           <List id={'chatList'}>
             {this.renderMessages()}
@@ -64,7 +71,7 @@ class ChatPage extends Component {
             rows={1}
             rowsMax={1}
             />
-          <RaisedButton label='Send' onClick={this.sendMessage} />
+          <RaisedButton label='Send' disabled={!this.state.message} onClick={this.sendMessage} />
         </div>
       </div>
     )
@@ -74,6 +81,7 @@ class ChatPage extends Component {
 function mapStateToProps (state, ownprops) {
   return {
     messages: state.msg.messages,
+    connected: state.msg.connected,
     user: state.loginReducer.user
   }
 }

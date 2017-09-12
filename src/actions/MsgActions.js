@@ -1,4 +1,4 @@
-import {MSG__USER_CONNECTED, MSG__CONNECTED, MSG__DISCONNECTED, MSG__NAVIGATE_TO_CHANNEL, MSG__SEND_MESSAGE, MSG__NEW_MESSAGE_RECEIVED} from '../constants/actionTypes'
+import {MSG__USER_CONNECTED, MSG__NEW_MESSAGE_RECEIVED_BULK, MSG__CONNECTED, MSG__DISCONNECTED, MSG__NAVIGATE_TO_CHANNEL, MSG__SEND_MESSAGE, MSG__NEW_MESSAGE_RECEIVED} from '../constants/actionTypes'
 
 export const connected = () => ({
   type: MSG__CONNECTED
@@ -21,6 +21,11 @@ export const openChat = (channel) => ({
 export const messageRecieved = (message) => ({
   type: MSG__NEW_MESSAGE_RECEIVED,
   payload: message
+})
+
+export const multipleMessagesRecieved = (messages) => ({
+  type: MSG__NEW_MESSAGE_RECEIVED_BULK,
+  payload: messages
 })
 
 export const sendMessage = (message, channel) => ({
