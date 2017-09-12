@@ -41,7 +41,7 @@ const findUserInMembers = (members, phone) => {
 function * login ({phone}) {
   yield call(delay, 500)
   if (process.env.NODE_ENV !== 'production') {
-    yield put(push('/status'))
+    yield put(push('/teams'))
     const data = require('./login-mock').default
     const user = findUser(data, phone)
     yield put(receivePosts(user, data))
@@ -51,7 +51,7 @@ function * login ({phone}) {
   try {
     const apiResponse = yield call(api.login, phone)
 
-    yield put(push('/status'))
+    yield put(push('/teams'))
     const user = findUser(apiResponse, phone)
     yield put(receivePosts(user, apiResponse))
   } catch (error) {
@@ -66,7 +66,7 @@ function * ensureRoute ({payload: {pathname}}) {
   yield call(delay, 50)
   const state = yield select(getState)
   if (state.loginReducer.loginState === AUTHENTICATED && pathname === '/') {
-    yield put(push('/status'))
+    yield put(push('/teams'))
   } else if (state.loginReducer.loginState !== AUTHENTICATED && pathname !== '/') {
     yield put(push('/'))
   }

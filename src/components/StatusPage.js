@@ -13,7 +13,7 @@ export const StatusPage = (props) => {
 
   return (
     <div>
-      <h2 className='alt-header'>Status</h2>
+      <h2 className='alt-header'>Teams</h2>
       <i className={'material-icons'} onClick={() => props.navigateToBanditChat()}>question_answer</i>
       <StatusList
         onClick={onRegionClick}
@@ -30,7 +30,7 @@ function mapStateToProps (state, ownprops) {
   return {
     data: state.statusReducer,
     navigateToRegion: (region) => browserHistory.push({
-      pathname: `/team/${region.id}`,
+      pathname: `/teams/${region.id}`,
       state: region
     })
   }

@@ -11,10 +11,10 @@ import NotFoundPage from './components/NotFoundPage.js'
 export default (
   <Route path='/' component={App}>
     <IndexRoute component={HomePage} />
-    <Route path='status' component={StatusPage} />
-    <Route path='team/:id' component={TeamPage} />
-    <Route path='status/chat' component={ChatPage} />
-    <Route path='team/:id/chat' component={ChatPage} />
+    <Route path='teams' component={StatusPage} />
+    <Route path='teams/:id' component={TeamPage} />
+    <Route path='bandit/chat' component={ChatPage} />
+    <Route path='teams/:id/chat' component={ChatPage} />
     <Route path='*' component={NotFoundPage} />
   </Route>
 )
