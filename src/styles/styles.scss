@@ -117,24 +117,29 @@ button {
     }
   }
 
-  .user-message {
-    background-color: rgba(98, 94, 121, 0.18)
-  }
 
   .chat-message {
+    background-color: #EEEEEE;
+
+    &.user-message {
+      background-color: #E3F2FD;
+    }
+
     margin-top: 10px;
+    border-radius: 15px;
+    padding: 5px;
 
     .time {
-      color: #4d4d4d;
+      color: #424242;
     }
 
     .user {
-      color: #4d4d4d;
+      color: #424242;
       margin-right: 15px;
     }
 
     .text {
-      color: #4d4d4d;
+      color: #424242;
       white-space: pre-wrap;
     }
   }
