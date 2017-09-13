@@ -1,7 +1,7 @@
 import React from 'react'
 import {ListItem} from 'material-ui/List'
 import Divider from 'material-ui/Divider'
-
+import Scans from 'material-ui/svg-icons/places/child-care'
 const StatusListItem = props => {
   let memberCount = props.teams.map(team => team.members.length).reduce((a, b) => a + b, 0)
   let teamCount = props.teams.length
@@ -22,7 +22,7 @@ const StatusListItem = props => {
         secondaryTextLines={2}
         rightAvatar={
           <div>
-            {props.scans}
+            <Scans />{props.scans}
           </div>
         }
       />

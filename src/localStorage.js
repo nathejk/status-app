@@ -12,6 +12,10 @@ export const loadState = () => {
 }
 
 export const saveState = (state) => {
+  if (!state) {
+    localStorage.setItem('state', undefined)
+  }
+
   try {
     localStorage.setItem('state', JSON.stringify(state))
   } catch (error) {

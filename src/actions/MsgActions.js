@@ -13,9 +13,9 @@ export const userConnected = (user) => ({
   payload: user
 })
 
-export const openChat = (channel) => ({
+export const openChat = (channel, id) => ({
   type: MSG__NAVIGATE_TO_CHANNEL,
-  payload: channel || 'Nathejk'
+  payload: {channel: channel || 'Nathejk', id}
 })
 
 export const messageRecieved = (message) => ({

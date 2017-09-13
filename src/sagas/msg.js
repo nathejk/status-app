@@ -2,11 +2,13 @@ import { delay, eventChannel } from 'redux-saga'
 import { put, take, fork, call, takeLatest, takeEvery, select } from 'redux-saga/effects'
 import io from 'socket.io-client'
 // import { push } from 'react-router-redux'
+import { push } from 'react-router-redux'
 import {getAuthenticatedState, getUserState, getLastRecievedMessageAt} from './sagaHelpers'
 import * as actions from '../actions/MsgActions'
 import * as actionTypes from '../constants/actionTypes'
 
 export const MSG_API__JOIN_CHANNEL = 'join channel'
+export const MSG_API__CHANGE_CHANNEL = 'MSG_API__CHANGE_CHANNEL'
 export const MSG_API__GET_MESSAGES_FROM = 'MSG_API__GET_MESSAGES_FROM'
 export const MSG_API__LEAVE_CHANNEL = 'leave channel'
 export const MSG_API__NEW_MESSAGE = 'new message'
@@ -77,6 +79,10 @@ function * checkServerForNewMessages () {
   socket.emit(MSG_API__GET_MESSAGES_FROM, {channel: 'nathejk', fromDate: fromDate || new Date('2013-10-01T00:00:00.000Z')})
 }
 
+function * joinChannel ({payload: {channel, id}}) {
+  yield put(push(`/teams/${channel}/chat`))
+}
+
 process.env.CHAT_SERVER_URL = '//'
 process.env.CHAT_SERVER_PORT = '3002'
 
@@ -106,6 +112,7 @@ export default function rootSaga () {
   return [
     takeEvery(actionTypes.MSG__SEND_MESSAGE, sendMessage),
     takeEvery(actionTypes.MSG__CONNECTED, checkServerForNewMessages),
+    takeEvery(actionTypes.MSG__NAVIGATE_TO_CHANNEL, joinChannel),
     fork(connectToChatServer),
 
     takeLatest(actionTypes.RECEIVE_POSTS, ensureRoute),

@@ -6,8 +6,17 @@ const msgByDesc = (a, b) => {
   return a.createdAt - b.createdAt
 }
 
+const filterByChannel = (allMessages, channel) => {
+  return allMessages.filter(x => x.channel === channel, allMessages).map(m => {
+    return {...m, createdAt: m.createdAt.fromNow === 'function' ? m.createdAt : moment(m.createdAt)}
+  })
+}
+
 const initialState = {
-  messages: []
+  messages: [],
+  allMessages: [],
+  channelMessages: [],
+  channel: 'Nathejk'
 }
 
 export default (state = initialState, action) => {
@@ -15,18 +24,45 @@ export default (state = initialState, action) => {
     case ('@@INIT'): {
       console.log([`init `, state])
 
-      if (!state.messages) {
+      if (!state.allMessages) {
         return {...initialState}
       }
 
-      const messages = state.messages.map(m => {
+      const messages = state.allMessages.map(m => {
         return {...m, createdAt: moment(m.createdAt)}
       })
       return {...state, messages}
     }
 
     case (types.LOG_OUT): {
-      return {}
+      return initialState
+    }
+
+    case ('@@router/LOCATION_CHANGE'): {
+      console.log('LOCATION_CHANGE')
+      console.log(action.payload.pathname)
+      const currentChannel = state.channel
+      const pathname = action.payload.pathname
+
+      if (pathname === '/bandit/chat' && currentChannel !== 'Nathejk') {
+        const channel = 'Nathejk'
+        return {
+          ...state,
+          channel: channel,
+          channelMessages: R.sort(msgByDesc, filterByChannel(state.allMessages, channel))
+        }
+      }
+
+      if (R.startsWith('/teams/', pathname) && R.endsWith('/chat')) {
+        const channel = pathname.substring(7, pathname.length - 5)
+        return {
+          ...state,
+          channel: channel,
+          channelMessages: R.sort(msgByDesc, filterByChannel(state.allMessages, channel))
+        }
+      }
+
+      return state
     }
 
     case (types.MSG__CONNECTED): {
@@ -44,6 +80,14 @@ export default (state = initialState, action) => {
       }
     }
 
+    case (types.MSG__NAVIGATE_TO_CHANNEL): {
+      return {
+        ...state,
+        channel: action.payload.channel,
+        channelMessages: R.sort(msgByDesc, filterByChannel(state.allMessages, action.payload.channel))
+      }
+    }
+
     case (types.MSG__USER_CONNECTED): {
       return {
         ...state,
@@ -53,18 +97,19 @@ export default (state = initialState, action) => {
 
     case (types.MSG__NEW_MESSAGE_RECEIVED): {
       const message = {...action.payload, createdAt: moment(action.payload.createdAt)}
-      const messages = R.sort(msgByDesc, append(message, state.messages))
-
-      return {...state, messages, lastMessageReceivedAt: R.last(messages).createdAt}
+      const allMessages = append(message, state.allMessages)
+      const channelMessages = R.sort(msgByDesc, filterByChannel(allMessages, state.channel))
+      return {...state, channelMessages, allMessages, lastMessageReceivedAt: R.last(allMessages).createdAt}
     }
 
     case (types.MSG__NEW_MESSAGE_RECEIVED_BULK): {
       const newMessages = action.payload.map(m => {
-        return {...m, createdAt: moment(action.payload.createdAt)}
+        return {...m, createdAt: moment(m.createdAt)}
       })
-      const messages = R.sort(msgByDesc, R.insertAll(state.messages.length - 1, state.messages, newMessages))
-      console.log(['bulk', messages])
-      return {...state, messages, lastMessageReceivedAt: R.last(messages).createdAt}
+
+      const allMessages = R.insertAll(state.allMessages.length - 1, state.allMessages, newMessages)
+      const channelMessages = R.sort(msgByDesc, filterByChannel(allMessages, state.channel))
+      return {...state, channelMessages, allMessages, lastMessageReceivedAt: R.last(allMessages).createdAt}
     }
 
     default:

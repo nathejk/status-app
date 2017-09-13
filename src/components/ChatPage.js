@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import moment from 'moment'
 import * as msgActions from '../actions/MsgActions'
 import {List} from 'material-ui/List'
 import TextField from 'material-ui/TextField'
@@ -19,8 +20,12 @@ class ChatPage extends Component {
   }
 
   sendMessage = () => {
-    this.props.sendMessage(this.state.message)
+    this.props.sendMessage(this.state.message, this.props.channel)
     this.setState({message: ''})
+  }
+
+  parseCreatedAtFromNow = (createdAt) => {
+    return typeof createdAt.fromNow === 'function' ? createdAt.fromNow() : moment(createdAt).fromNow()
   }
 
   renderMessages = () => {
@@ -33,7 +38,7 @@ class ChatPage extends Component {
       return (
         <div className={messageClass}>
           <div>
-            <strong className='user'>{m.user.name}</strong>{m.createdAt.fromNow()}
+            <strong className='user'>{m.user.name}</strong>{this.parseCreatedAtFromNow(m.createdAt)}
           </div>
           <div className='text'>
             {m.message}
@@ -51,7 +56,7 @@ class ChatPage extends Component {
     return (
       <div className='chat'>
         <h1>
-          Bandit Chat{this.renderConnection()}
+          {this.props.channel} Chat{this.renderConnection()}
         </h1>
 
         <div id={'chat'} className='top-container'>
@@ -80,7 +85,8 @@ class ChatPage extends Component {
 
 function mapStateToProps (state, ownprops) {
   return {
-    messages: state.msg.messages,
+    channel: state.msg.channel,
+    messages: state.msg.channelMessages,
     connected: state.msg.connected,
     user: state.loginReducer.user
   }
