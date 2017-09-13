@@ -74,6 +74,13 @@ function * sendMessage ({payload: {channel, message}}) {
   socket.emit(MSG_API__NEW_MESSAGE, {channel, message, user})
 }
 
+function * logout () {
+  if (socket) {
+    socket.disconnect()
+    socket = undefined
+  }
+}
+
 function * checkServerForNewMessages () {
   const fromDate = yield select(getLastRecievedMessageAt)
   socket.emit(MSG_API__GET_MESSAGES_FROM, {channel: 'nathejk', fromDate: fromDate || new Date('2013-10-01T00:00:00.000Z')})
@@ -103,7 +110,7 @@ function * connectToChatServer () {
 }
 
 function * ensureRoute (action) {
-  yield delay(1000)
+  yield delay(100)
 
   yield fork(connectToChatServer)
 }
@@ -111,6 +118,7 @@ function * ensureRoute (action) {
 export default function rootSaga () {
   return [
     takeEvery(actionTypes.MSG__SEND_MESSAGE, sendMessage),
+    takeEvery(actionTypes.LOG_OUT, logout),
     takeEvery(actionTypes.MSG__CONNECTED, checkServerForNewMessages),
     takeEvery(actionTypes.MSG__NAVIGATE_TO_CHANNEL, joinChannel),
     fork(connectToChatServer),
