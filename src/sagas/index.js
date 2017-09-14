@@ -39,14 +39,14 @@ const findUserInMembers = (members, phone) => {
 }
 
 function * login ({phone}) {
-  yield call(delay, 500)
-  if (process.env.NODE_ENV !== 'production') {
-    yield put(push('/teams'))
-    const data = require('./login-mock').default
-    const user = findUser(data, phone)
-    yield put(receivePosts(user, data))
-    return
-  }
+  yield call(delay, 200)
+  // if (process.env.NODE_ENV !== 'production') {
+  //   yield put(push('/teams'))
+  //   const data = require('./login-mock').default
+  //   const user = findUser(data, phone)
+  //   yield put(receivePosts(user, data))
+  //   return
+  // }
 
   try {
     const apiResponse = yield call(api.login, phone)

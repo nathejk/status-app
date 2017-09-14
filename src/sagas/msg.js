@@ -44,7 +44,6 @@ function createSocketChannel (socket) {
     })
 
     socket.on(MSG_API__NEW_MESSAGE, (message) => {
-      console.log(message)
       emit(actions.messageRecieved(message))
       const elements = document.getElementsByClassName('text')
       if (elements && elements.length > 1) {
@@ -91,7 +90,7 @@ function * joinChannel ({payload: {channel, id}}) {
 }
 
 process.env.CHAT_SERVER_URL = '//'
-process.env.CHAT_SERVER_PORT = '3002'
+process.env.CHAT_SERVER_PORT = process.env.PORT || '3000'
 
 function * connectToChatServer () {
   const authenticated = yield select(getAuthenticatedState)
@@ -113,6 +112,11 @@ function * ensureRoute (action) {
   yield delay(100)
 
   yield fork(connectToChatServer)
+
+  const elements = document.getElementsByClassName('text')
+  if (elements && elements.length > 1) {
+    elements[elements.length - 1].scrollIntoView()
+  }
 }
 
 export default function rootSaga () {

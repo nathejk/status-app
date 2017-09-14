@@ -1,50 +1,15 @@
-const path = require('path')
-var app = require('http').createServer(handler)
-var fs = require('fs')
-var url = require('url')
-var request = require('request')
+#!/usr/bin/env babel-node
 
-app.listen(process.env.PORT || 3000)
-function handler (req, res) {
-  const reqUrl = url.parse(req.url, true)
-  if (req.url.lastIndexOf('/proxy?', 0) === 0) {
-    var x = request(req.url.substring('7'))
-    console.log(req.url.substring('7'))
-    req.pipe(x)
-    x.pipe(res)
-    return
-  }
+// @flow
 
-  let filePath = decodeURIComponent(reqUrl.pathname)
+require('opbeat').start({
+  appId: '230f25efa8',
+  organizationId: '5e39308c355149cb9fc5280d31ede681',
+  secretToken: process.env.NODE_ENV === 'production' ? '408ab3b63915571f7ad03d8e7726a0d90a29cc63' : ''
+})
 
-  const readFile = (err, data) => {
-    if (err) {
-      res.writeHead(500)
-      console.error(err)
-      return res.end(`Error loading ${reqUrl.pathname}`)
-    }
+require('babel-register')({
+  ignore: /node_modules\/(?!nathejk-chat)/
+})
 
-    res.writeHead(200)
-    res.end(data)
-  }
-
-  if (filePath === '/') {
-    filePath += 'index.html'
-  }
-
-  filePath = path.join(__dirname, filePath.substring(1, filePath.length))
-
-  fs.stat(filePath, (err, stats) => {
-    if (err) {
-      console.error(err)
-      fs.readFile(path.join(__dirname, '/index.html'), readFile)
-      return
-    }
-
-    if (stats.isFile) {
-      fs.readFile(filePath, readFile)
-    }
-  })
-}
-
-console.log('Server started')
+require('./chat-server').default()
