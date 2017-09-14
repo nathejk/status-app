@@ -44,6 +44,18 @@ body {
   min-width: 100%;
 }
 
+.list-header {
+  font-size: 1.6em !important;
+  font-weight: 400;
+  vertical-align: center;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.chat-button {
+  float: right;
+}
+
 button {
   -webkit-appearance: inherit !important;
 }
@@ -149,4 +161,5 @@ button {
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 16px;
+  float: right;
 }

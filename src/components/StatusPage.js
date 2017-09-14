@@ -5,6 +5,7 @@ import StatusList from './StatusList'
 import {connect} from 'react-redux'
 import { browserHistory } from 'react-router'
 import {bindActionCreators} from 'redux'
+import Message from 'material-ui/svg-icons/communication/message'
 
 export const StatusPage = (props) => {
   let onRegionClick = region => {
@@ -13,8 +14,11 @@ export const StatusPage = (props) => {
 
   return (
     <div>
-      <h2 className='alt-header'>Teams</h2>
-      <i className={'material-icons'} onClick={() => props.navigateToBanditChat()}>question_answer</i>
+      <div className={'list-header'}>
+        Teams
+        <Message className={'chat-button'} onClick={() => { props.navigateToBanditChat() }} />
+      </div>
+
       <StatusList
         onClick={onRegionClick}
         regions={props.data.regions} />

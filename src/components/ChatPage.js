@@ -55,9 +55,9 @@ class ChatPage extends Component {
   render () {
     return (
       <div className='chat'>
-        <h1>
+        <div className='list-header'>
           {this.props.channel} Chat{this.renderConnection()}
-        </h1>
+        </div>
 
         <div id={'chat'} className='top-container'>
           <List id={'chatList'}>

@@ -6,6 +6,7 @@ import TeamListItem from './TeamListItem'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import Message from 'material-ui/svg-icons/communication/message'
+
 export const TeamPage = (props) => {
   let memberItems = props.region.members.map(member => {
     return (
@@ -18,8 +19,10 @@ export const TeamPage = (props) => {
 
   return (
     <div>
-      <h2 className='alt-header'>{props.region.name} </h2>
-      <Message onClick={() => { props.navigateToBanditChat(props.region.name, props.region.id) }} />
+      <div className={'list-header'}>
+        {props.region.name}
+        <Message className={'chat-button'} onClick={() => { props.navigateToBanditChat(props.region.name, props.region.id) }} />
+      </div>
       {memberItems}
       <TeamList
         teams={props.region.teams} />
@@ -50,14 +53,6 @@ const mapDispatchToProps = dispatch => {
   },
   dispatch)
 }
-
-
-// function mapDispatchToProps (dispatch) {
-//   return {
-//     actions: bindActionCreators(actions, dispatch,
-//       navigateToBanditChat: msgActions.openChat
-//   }
-// }
 
 export default connect(
   mapStateToProps,
