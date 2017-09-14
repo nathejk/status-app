@@ -40,6 +40,10 @@ function handler (req, res) {
     filePath += 'index.html'
   }
 
+  if (filePath === '/socket.io/socket.io.js') {
+    filePath = '../node_modules/socket.io-client/dist/socket.io.js'
+  }
+
   filePath = path.join(__dirname, filePath.substring(1, filePath.length))
 
   fs.stat(filePath, (err, stats) => {
