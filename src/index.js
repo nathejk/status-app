@@ -1,5 +1,6 @@
 /* eslint-disable import/default */
 
+import initOpbeat, { wrapRouter } from 'opbeat-react'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -15,6 +16,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 require('./favicon.ico') // Tell webpack to load favicon.ico
 
+const OpbeatRouter = wrapRouter(Router)
+
+initOpbeat({
+  orgId: '5e39308c355149cb9fc5280d31ede681',
+  appId: '937f9796e3'
+})
+
 const store = configureStore(undefined, browserHistory)
 
 // Create an enhanced history that syncs navigation events with the store
@@ -28,7 +36,7 @@ render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <div className='wrapper'>
-        <Router history={history} routes={routes} />
+        <OpbeatRouter history={history} routes={routes} />
       </div>
     </MuiThemeProvider>
   </Provider>, document.getElementById('app')

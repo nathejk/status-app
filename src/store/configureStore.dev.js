@@ -6,6 +6,7 @@ import { createStore, compose, applyMiddleware } from 'redux'
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant'
 import { routerMiddleware } from 'react-router-redux'
 import createSagaMiddleware from 'redux-saga'
+import { createOpbeatMiddleware } from 'opbeat-react/redux'
 import rootReducer from '../reducers'
 import rootSaga from '../sagas'
 import {loadState} from '../localStorage'
@@ -20,7 +21,8 @@ export default function configureStore (initialState, browserHistory) {
 
     // To support dipatch push (route) in actions
     routerMiddleware(browserHistory),
-    sagaMiddleware
+    sagaMiddleware,
+    createOpbeatMiddleware()
   ]
 
   const store = createStore(rootReducer, loadState(), compose(

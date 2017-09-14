@@ -13,6 +13,7 @@
         "transform-react-constant-elements",
         "transform-react-remove-prop-types",
         "transform-runtime",
+        "add-react-displayname",
         "ramda"
       ]
     },
@@ -21,6 +22,7 @@
         "transform-react-constant-elements",
         "transform-react-remove-prop-types",
         "ramda",
+        "add-react-displayname",
         "transform-runtime"
       ]
     }

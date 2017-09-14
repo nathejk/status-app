@@ -36,7 +36,7 @@ class ChatPage extends Component {
     return this.props.messages.map(m => {
       const messageClass = `${m.user.id === this.props.user.id ? 'user-message' : ''} chat-message`
       return (
-        <div className={messageClass}>
+        <div key={m.id} className={messageClass}>
           <div>
             <strong className='user'>{m.user.name}</strong>{this.parseCreatedAtFromNow(m.createdAt)}
           </div>
