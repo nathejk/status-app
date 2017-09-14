@@ -1,10 +1,4 @@
 {
-  "name": "server",
-  "dependencies": {
-    "request": "^2.81.0"
-  }
-}
-{
   "name": "nathejk-chat",
   "version": "0.1.0",
   "description": "chat-server for the nathejk event",
