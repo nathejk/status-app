@@ -1,6 +1,6 @@
+import moment from 'moment'
 import * as types from '../constants/actionTypes'
 import initialState from './initialState'
-const objectAssign = require('object-assign')
 
 export default function statusReducer (state = initialState.data, action) {
   switch (action.type) {
@@ -11,7 +11,7 @@ export default function statusReducer (state = initialState.data, action) {
     case (types.RECEIVE_POSTS): {
       let data = action.data.regions.sort((a, b) => b.scans - a.scans)
 
-      return objectAssign({}, state, {regions: data})
+      return {...state, regions: data, lastUpdatedAt: moment()}
     }
 
     case (types.LOG_OUT): {

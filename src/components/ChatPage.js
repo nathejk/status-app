@@ -49,7 +49,9 @@ class ChatPage extends Component {
   }
 
   renderConnection = () => {
-    return this.props.connected ? <ConnectionOn className={'connection-state'} color={green500} /> : <ConnectionOff className='connection-state' color={red500} />
+    let lastMessageReceivedAt = this.props.lastMessageReceivedAt ? this.props.lastMessageReceivedAt : moment('2013-10-01T00:00:00.000Z')
+    lastMessageReceivedAt = lastMessageReceivedAt.fromNow ? lastMessageReceivedAt : moment(lastMessageReceivedAt)
+    return (true || lastMessageReceivedAt.isAfter(moment().subtract({seconds: 20}))) ? <ConnectionOn className={'connection-state'} color={green500} /> : <ConnectionOff className='connection-state' color={red500} />
   }
 
   render () {
@@ -88,6 +90,7 @@ function mapStateToProps (state, ownprops) {
     channel: state.msg.channel,
     messages: state.msg.channelMessages,
     connected: state.msg.connected,
+    lastMessageReceivedAt: state.msg.lastMessageReceivedAt,
     user: state.loginReducer.user
   }
 }

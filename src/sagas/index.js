@@ -1,13 +1,14 @@
 import { delay } from 'redux-saga'
-import { put, call, all, takeEvery, takeLatest, select } from 'redux-saga/effects'
+import { put, fork, call, all, takeEvery, takeLatest, select } from 'redux-saga/effects'
 import { push } from 'react-router-redux'
+import moment from 'moment'
 import * as actions from '../constants/actionTypes'
 import {AUTHENTICATED} from '../constants/loginStates'
 import {receivePosts} from '../actions/LoginActions'
 import api from '../api'
 import {saveState} from '../localStorage'
 import msgSagas from './msg'
-import {getState} from './sagaHelpers'
+import {getState, getUserState} from './sagaHelpers'
 
 const findUser = (apiResponse, phone) => {
   let region, team, user
@@ -38,6 +39,23 @@ const findUserInMembers = (members, phone) => {
   }
 }
 
+function * refetch () {
+  while (true) {
+    try {
+      const state = yield select(getState)
+      if (state.loginReducer.loginState === AUTHENTICATED && (!state.loginReducer.lastUpdatedAt || state.loginReducer.lastUpdatedAt < moment().subtract(5, 'seconds'))) {
+        const user = yield select(getUserState)
+        let apiResponse = yield call(api.login, user.phone)
+        apiResponse = JSON.parse(JSON.stringify(apiResponse))
+        yield put(receivePosts(user, apiResponse))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    yield call(delay, 10000)
+  }
+}
+
 function * login ({phone}) {
   yield call(delay, 200)
   // if (process.env.NODE_ENV !== 'production') {
@@ -49,8 +67,8 @@ function * login ({phone}) {
   // }
 
   try {
-    const apiResponse = yield call(api.login, phone)
-
+    let apiResponse = yield call(api.login, phone)
+    apiResponse = JSON.parse(JSON.stringify(apiResponse))
     yield put(push('/teams'))
     const user = findUser(apiResponse, phone)
     yield put(receivePosts(user, apiResponse))
@@ -76,7 +94,8 @@ function * saveStateOnUpdates ({phone}) {
   yield call(delay, 100)
   const state = yield select(getState)
   if (state.loginReducer.loginState === AUTHENTICATED) {
-    saveState({...state, routing: undefined})
+    const statusReducer = {...state.statusReducer, lastUpdatedAt: undefined}
+    saveState({...state, routing: undefined, statusReducer})
   } else {
     saveState({})
   }
@@ -85,6 +104,7 @@ function * saveStateOnUpdates ({phone}) {
 export default function * rootSaga () {
   yield all([
     ...msgSagas(),
+    fork(refetch),
     takeEvery('*', saveStateOnUpdates),
     takeLatest(actions.REQUEST_POSTS, login),
     takeLatest('@@router/LOCATION_CHANGE', ensureRoute)
