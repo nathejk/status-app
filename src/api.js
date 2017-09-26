@@ -12,6 +12,27 @@ export default {
       }
     }).then(checkStatus)
     .then(parseJSON)
+  },
+  getMessagesFrom (date) {
+    return fetch(`/chat/from?from=${date}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(checkStatus)
+    .then(parseJSON)
+  },
+  sendMessage (message, user, channel) {
+    return fetch(`/chat/post`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({message, user, channel})
+    }).then(checkStatus)
+    .then(parseJSON)
   }
 }
 
