@@ -1,14 +1,5 @@
 version: "2.1"
 services:
-  chatserver:
-    image: nathejk/chat-server
-    # build: ../msg-server
-    ports:
-      - "3002:3002"
-    restart: always
-    environment:
-      PORT: 3002
-      NODE_ENV: production
   api:
     build: .
     command: "node server.js"

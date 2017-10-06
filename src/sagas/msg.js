@@ -100,8 +100,6 @@ function * refetch () {
     try {
       const authenticated = yield select(getAuthenticatedState)
       if (authenticated) {
-      // if (authenticated && (!state.loginReducer.lastUpdatedAt || state.loginReducer.lastUpdatedAt < moment().subtract(5, 'seconds'))) {
-        // const user = yield select(getUserState)
         let fromDate = yield select(getLastRecievedMessageAt)
         fromDate = fromDate || moment('2013-10-01T00:00:00.000Z')
         if (!fromDate.fromNow) {
@@ -110,7 +108,6 @@ function * refetch () {
 
         let apiResponse = yield call(api.getMessagesFrom, fromDate.format())
         apiResponse = JSON.parse(JSON.stringify(apiResponse))
-        // yield put(receivePosts(user, apiResponse))
 
         yield put(actions.multipleMessagesRecieved(apiResponse))
         const elements = document.getElementsByClassName('text')
@@ -126,25 +123,24 @@ function * refetch () {
 }
 
 function * checkServerForNewMessages () {
-  const fromDate = yield select(getLastRecievedMessageAt)
-  socket.emit(MSG_API__GET_MESSAGES_FROM, {channel: 'nathejk', fromDate: fromDate || new Date('2013-10-01T00:00:00.000Z')})
+  if (socket && socket.connected) {
+    const fromDate = yield select(getLastRecievedMessageAt)
+    socket.emit(MSG_API__GET_MESSAGES_FROM, {channel: 'nathejk', fromDate: fromDate || new Date('2013-10-01T00:00:00.000Z')})
+  }
 }
 
 function * joinChannel ({payload: {channel, id}}) {
   yield put(push(`/teams/${channel}/chat`))
 }
 
-process.env.CHAT_SERVER_URL = '//'
-process.env.CHAT_SERVER_PORT = process.env.PORT || '3000'
+const CHAT_SERVER_URL = process.env.CHAT_SERVER_ADDRESS || '//'
 
 function * connectToChatServer () {
   const authenticated = yield select(getAuthenticatedState)
   const user = yield select(getUserState)
-  if (authenticated && !socket && false) {
+  if (authenticated && !socket && process.env.USE_SOCKET) {
     socket = io(`${CHAT_SERVER_URL}?phone=${user.phone}`)
-    // socket = io(`${process.env.CHAT_SERVER_URL}:${process.env.CHAT_SERVER_PORT}?phone=${user.phone}`)
     const socketChannel = yield call(createSocketChannel, socket)
-    console.log(socketChannel)
 
     while (true) {
       const payload = yield take(socketChannel)
@@ -166,10 +162,9 @@ function * ensureRoute (action) {
 
 export default function rootSaga () {
   return [
-    // takeEvery(actionTypes.MSG__SEND_MESSAGE, sendMessageHTTP),
     takeEvery(actionTypes.MSG__SEND_MESSAGE, sendMessage),
     takeEvery(actionTypes.LOG_OUT, logout),
-    // takeEvery(actionTypes.MSG__CONNECTED, checkServerForNewMessages),
+    takeEvery(actionTypes.MSG__CONNECTED, checkServerForNewMessages),
     takeEvery(actionTypes.MSG__NAVIGATE_TO_CHANNEL, joinChannel),
 
     fork(refetch),
